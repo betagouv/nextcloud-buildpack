@@ -1,0 +1,145 @@
+{
+  "system": {
+    "default_language": "fr",
+    "default_locale": "fr",
+    "default_phone_region": "FR",
+    "skeletondirectory": "",
+    "templatedirectory": "",
+    "appstoreenabled": false,
+    "appstoreurl": "",
+    "updatechecker": false
+  },
+  "apps": {
+    "activity": {
+      "enabled": "no"
+    },
+    "circles": {
+      "enabled": "no"
+    },
+    "cloud_federation_api": {
+      "enabled": "no"
+    },
+    "comments": {
+      "enabled": "no"
+    },
+    "contactsinteraction": {
+      "enabled": "no"
+    },
+    "dashboard": {
+      "enabled": "no"
+    },
+    "dav": {
+      "enabled": "no"
+    },
+    "federatedfilesharing": {
+      "enabled": "no"
+    },
+    "federation": {
+      "enabled": "no"
+    },
+    "files": {
+      "installed_version": "1.22.0",
+      "types": "filesystem",
+      "enabled": "yes"
+    },
+    "files_pdfviewer": {
+      "installed_version": "2.8.0",
+      "types": "",
+      "enabled": "yes"
+    },
+    "files_rightclick": {
+      "installed_version": "1.6.0",
+      "types": "",
+      "enabled": "yes"
+    },
+    "files_sharing": {
+      "enabled": "no"
+    },
+    "files_trashbin": {
+      "enabled": "no"
+    },
+    "files_versions": {
+      "enabled": "no"
+    },
+    "firstrunwizard": {
+      "enabled": "no"
+    },
+    "logreader": {
+      "enabled": "no"
+    },
+    "lookup_server_connector": {
+      "enabled": "no"
+    },
+    "nextcloud_announcements": {
+      "enabled": "no"
+    },
+    "notifications": {
+      "enabled": "no"
+    },
+    "oauth2": {
+      "enabled": "no"
+    },
+    "password_policy": {
+      "enabled": "yes"
+    },
+    "photos": {
+      "enabled": "no"
+    },
+    "privacy": {
+      "enabled": "yes"
+    },
+    "provisioning_api": {
+      "enabled": "yes"
+    },
+    "recommendations": {
+      "enabled": "no"
+    },
+    "related_resources": {
+      "enabled": "no"
+    },
+    "serverinfo": {
+      "enabled": "yes"
+    },
+    "settings": {
+      "installed_version": "1.9.0",
+      "types": "",
+      "enabled": "yes"
+    },
+    "sharebymail": {
+      "enabled": "no"
+    },
+    "support": {
+      "enabled": "no"
+    },
+    "survey_client": {
+      "enabled": "no"
+    },
+    "systemtags": {
+      "enabled": "no"
+    },
+    "text": {
+      "enabled": "no"
+    },
+    "theming": {
+      "enabled": "no"
+    },
+    "twofactor_backupcodes": {
+      "enabled": "yes"
+    },
+    "updatenotification": {
+      "enabled": "no"
+    },
+    "user_status": {
+      "enabled": "no"
+    },
+    "viewer": {
+      "enabled": "no"
+    },
+    "weather_status": {
+      "enabled": "no"
+    },
+    "workflowengine": {
+      "enabled": "no"
+    }
+  }
+}

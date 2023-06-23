@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# Debug, echo every command
+if [[ -n "$BUILDPACK_DEBUG" ]]; then
+  set -x
+fi
+
+set -e # Fail immediately on non-zero exit code.
+set -o pipefail # Fail immediately on non-zero exit code within a pipeline.
+
+basedir="$( cd -P "$( dirname "$0" )" && pwd )" 
+
+NEXTCLOUD_VERSION="${NEXTCLOUD_VERSION:-27.0.0}"
+
+echo "=====> Start building Nextcloud"
+
+echo "Nextcloud version : $NEXTCLOUD_VERSION"
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=${3:-}
+
+NEXTCLOUD_DOWNLOADS="$BUILD_DIR/downloads"
+NEXTCLOUD_URL=https://download.nextcloud.com/server/releases
+NEXTCLOUD_ASC=https://nextcloud.com
+
+echo "## start here $basedir $BUILD_DIR"
+
+mkdir -p $NEXTCLOUD_DOWNLOADS
+
+echo -n "-----> Downloading Nextcloud from $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2 ... "
+( cd $NEXTCLOUD_DOWNLOADS
+  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.asc
+  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.md5
+  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2
+  md5sum -c nextcloud-$NEXTCLOUD_VERSION.tar.bz2.md5 < nextcloud-$NEXTCLOUD_VERSION.tar.bz2
+  curl -O $NEXTCLOUD_ASC/nextcloud.asc
+  gpg --import nextcloud.asc
+  gpg --verify nextcloud-$NEXTCLOUD_VERSION.tar.bz2.asc nextcloud-$NEXTCLOUD_VERSION.tar.bz2
+
+  echo -n "-----> Extracting archive... "
+  tar -xjf $NEXTCLOUD_DOWNLOADS/nextcloud-$NEXTCLOUD_VERSION.tar.bz2 -C "$BUILD_DIR"
+)
+echo "done"
+
+echo -n "-----> Deleting downloads directory... "
+rm -rf "$NEXTCLOUD_DOWNLOADS"
+
+echo -n "-----> Install default files... "
+mkdir -p "$BUILD_DIR/bin"
+mkdir -p "$BUILD_DIR/conf"
+cp $basedir/../Procfile "$BUILD_DIR/"
+cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
+cp $basedir/../config/nextcloud.conf.erb "$BUILD_DIR/conf/nextcloud.conf.erb"
+cp $basedir/../composer.* "$BUILD_DIR/"
+
+echo "done"
+
+echo "      done building with nextcloud buildpack"

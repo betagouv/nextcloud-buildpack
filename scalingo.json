@@ -1,0 +1,16 @@
+{
+    "name": "Nextcloud App",
+    "description": "Un Nextcloud pour la suite collaborative",
+    "keywords": [
+      "nextcloud", "stockage"
+    ],
+    "env": {},
+    "addons": ["postgresql:postgresql-sandbox"],
+    "formation": {
+      "web": {
+        "amount": 1,
+        "size": "S"
+      }
+    },
+    "postdeploy": ""
+}

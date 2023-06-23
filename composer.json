@@ -1,0 +1,12 @@
+{
+  "require": {
+    "ext-gmp": "*",
+    "ext-imagick": "*"
+  },
+  "extra": {
+    "paas": {
+      "document-root": "nextcloud",
+      "index-document": "index.php"
+    }
+  }
+}
