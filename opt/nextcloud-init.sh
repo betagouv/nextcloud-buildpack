@@ -95,7 +95,7 @@ cp $basedir/conf/s3.config.php config/s3.config.php
 echo "# Installing with PostgreSQL database"
 
 echo "# reset ${NC_ADMIN_USER} account"
-psql $DATABASE_URL -c "DELETE FROM oc_users  WHERE uid='${NC_ADMIN_USER}'"
+psql $DATABASE_URL -c "DELETE FROM oc_users  WHERE uid='${NC_ADMIN_USER}'" || true
 #
 # configure
 #
@@ -113,7 +113,7 @@ php occ  maintenance:install \
   -n
 
 echo "# cleanup config template"
-rm conf/s3.config.php
+rm -rf conf/s3.config.php
 
 export OC_PASS=$NC_ADMIN_PASSWORD
 php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
