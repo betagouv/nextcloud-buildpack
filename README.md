@@ -51,13 +51,25 @@ NC_THEMING_CONFIG_NAME="Sample"
 NC_THEMING_CONFIG_SLOGAN="it works!"
 NC_THEMING_CONFIG_URL="github.com"
 NC_THEMING_CONFIG_LOGO="/app/nextcloud/core/img/logo/mylogo.png"
+# Primary Storage S3
+OBJECTSTORE_S3_SSL=true
+OBJECTSTORE_S3_KEY=_REPLACE_
+OBJECTSTORE_S3_BUCKET=_REPLACE_
+OBJECTSTORE_S3_HOST=s3.gra.io.cloud.ovh.net
+OBJECTSTORE_S3_REGION=gra
+OBJECTSTORE_S3_SECRET=_REPLACE_
+OBJECTSTORE_S3_AUTOCREATE=true
 ```
 
 Add addons:
  - postgresql postgresql-starter-1024
+ - redis redis-starter-512
 
 ## Tips and Docs
 
 - config: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html
 - occ command: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 - nginx configuration: https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx
+- primary storage S3: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#simple-storage-service-s3
+- scale S3 bucket: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#multibucket-object-store
+

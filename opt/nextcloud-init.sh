@@ -25,63 +25,62 @@ if [[ -z "$NC_ADMIN_PASSWORD" ]]; then
   exit -1
 fi
 
-# Following regex is based on https://www.rfc-editor.org/rfc/rfc3986#appendix-B with
-# additional sub-expressions to split authority into userinfo, host and port
 #
-URI_REGEX='^(postgres?:\/\/)((.*):(.*)@)?([^:\/?#]+)(:([0-9]+))?(\/([^?#]*))(\?([^#]*))?(#(.*))?'
-
-parse_scheme () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[1]}"
+# common libs
+#
+render_template() {
+# render a template configuration file
+# expand variables + preserve formatting + preserve quotes
+#
+  eval "cat <<EOF
+$(<$1)
+EOF
+" 2> /dev/null
 }
 
-parse_authority () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[2]}"
+parse_scheme () {
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).scheme)'
 }
 
 parse_user () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[3]}"
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).username)'
 }
 
 parse_pass () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[4]}"
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).password)'
 }
 
 parse_host () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[5]}"
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).hostname)'
 }
 
 parse_port () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[7]}"
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).port)'
 }
 
 parse_path () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[8]}"
+    echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).path.strip("/"))'
 }
-
-parse_rpath () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[9]}"
-}
-
-parse_query () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[10]}"
-}
-
-parse_fragment () {
-    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[11]}"
-}
-
 
 eval "DATABASE_USER=$(parse_user $DATABASE_URL)"
 eval "DATABASE_PASS=$(parse_pass $DATABASE_URL)"
 eval "DATABASE_HOST=$(parse_host $DATABASE_URL)"
 eval "DATABASE_PORT=$(parse_port $DATABASE_URL)"
-eval "DATABASE_NAME=$(parse_rpath $DATABASE_URL)"
+eval "DATABASE_NAME=$(parse_path $DATABASE_URL)"
 
 export DATABASE_USER
 export DATABASE_PASS
 export DATABASE_HOST
 export DATABASE_PORT
 export DATABASE_NAME
+
+eval "REDIS_PASS=$(parse_pass $REDIS_URL/)"
+eval "REDIS_HOST=$(parse_host $REDIS_URL/)"
+eval "REDIS_PORT=$(parse_port $REDIS_URL/)"
+
+export REDIS_PASS
+export REDIS_HOST
+export REDIS_PORT
 
 ( cd nextcloud
 #
@@ -90,13 +89,20 @@ export DATABASE_NAME
 if [[ ! -f config/config.php ]] ; then
 
 echo "# prepare config template"
-cp $basedir/conf/s3.config.php config/s3.config.php
+export NC_CONFIG_TEMPLATE="s3 redis"
+for c in $NC_CONFIG_TEMPLATE; do
+  echo "# $c.config.php"
+  cp $basedir/conf/$c.config.php config/$c.config.php
+done
 
 echo "# Installing with PostgreSQL database"
 
 echo "# reset ${NC_ADMIN_USER} account"
 ( set +e 
-  psql $DATABASE_URL -c "DELETE FROM oc_users  WHERE uid='${NC_ADMIN_USER}'" || true
+  DB_NC_IS_INSTALLED=$(psql $DATABASE_URL -qAt -c "SELECT true as exists FROM information_schema.tables WHERE table_type='BASE TABLE' AND table_schema='public'  AND table_name='oc_users';")
+  if [[ -n "${DB_NC_IS_INSTALLED}" ]] ; then
+    psql $DATABASE_URL -c "DELETE FROM oc_users WHERE uid='${NC_ADMIN_USER}'" || true
+  fi
 ) || true
 #
 # configure
@@ -115,7 +121,9 @@ php occ  maintenance:install \
   -n
 
 echo "# cleanup config template"
-rm -rf config/s3.config.php
+for c in $NC_CONFIG_TEMPLATE; do
+rm -rf config/$c.config.php
+done
 
 export OC_PASS=$NC_ADMIN_PASSWORD
 php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
@@ -186,3 +194,6 @@ if php occ config:system:get installed; then
 fi
 
 )
+
+echo "# prepare php-redis-session.ini"
+render_template $basedir/conf/php-redis-session.ini.tmpl > etc/php-redis-session.ini

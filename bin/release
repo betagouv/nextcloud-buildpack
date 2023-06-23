@@ -6,6 +6,7 @@ cat << EOF
 ---
 addons:
   - postgresql
+  - redis
 default_process_types:
   web: /app/bin/nextcloud.sh
 EOF
