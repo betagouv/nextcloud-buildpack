@@ -52,7 +52,11 @@ mkdir -p "$BUILD_DIR/bin"
 mkdir -p "$BUILD_DIR/conf"
 cp $basedir/../Procfile "$BUILD_DIR/"
 cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
+# nextcloud
+cp $basedir/../config/s3.config.php "$BUILD_DIR/conf/"
+# nginx
 cp $basedir/../config/nextcloud.conf.erb "$BUILD_DIR/conf/nextcloud.conf.erb"
+# php
 cp $basedir/../composer.* "$BUILD_DIR/"
 
 echo "done"

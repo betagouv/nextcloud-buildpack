@@ -89,28 +89,11 @@ export DATABASE_NAME
 #
 if [[ ! -f config/config.php ]] ; then
 
-#
-# generate autoconfig
-#
-#cat <<EOF > config/autoconfig.php
-#<?php
-#\$AUTOCONFIG = array (
-#  'trusted_domains' =>
-#  array (
-#    0 => '$NC_TRUSTED_DOMAINS',
-#  ),
-#  'directory' => '/app/nextcloud/data',
-#  'overwrite.cli.url' => 'http://localhost',
-#  'dbtype' => 'pgsql',
-#  'dbname' => '${DATABASE_NAME}',
-#  'dbhost' => '${DATABASE_HOST}',
-#  'dbport' => '${DATABASE_PORT}',
-#  'dbuser' => '${DATABASE_USER}',
-#  'dbpass' => '${DATABASE_PASS}',
-#  'dbtableprefix' => 'oc_',
-#);
-#EOF
-#
+echo "# prepare config template"
+cp $basedir/conf/s3.config.php config/s3.config.php
+
+echo "# Installing with PostgreSQL database"
+
 echo "# reset ${NC_ADMIN_USER} account"
 psql $DATABASE_URL -c "DELETE FROM oc_users  WHERE uid='${NC_ADMIN_USER}'"
 #
@@ -128,6 +111,9 @@ php occ  maintenance:install \
   --admin-email=${NC_ADMIN_EMAIL} \
   --no-ansi \
   -n
+
+echo "# cleanup config template"
+rm conf/s3.config.php
 
 export OC_PASS=$NC_ADMIN_PASSWORD
 php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
