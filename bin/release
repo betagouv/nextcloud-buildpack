@@ -4,6 +4,8 @@ BUILD_DIR=$1
 
 cat << EOF
 ---
+addons:
+  - postgresql
 default_process_types:
   web: /app/bin/nextcloud.sh
 EOF
