@@ -103,7 +103,7 @@ echo "# reset ${NC_ADMIN_USER} account"
   if [[ -n "${DB_NC_IS_INSTALLED}" ]] ; then
     psql $DATABASE_URL -c "DELETE FROM oc_users WHERE uid='${NC_ADMIN_USER}'" || true
   fi
-) || true
+)
 #
 # configure
 #
