@@ -80,8 +80,17 @@ NC_THEMING_CONFIG_LOGO="/app/nextcloud/core/img/logo/mylogo.png"
 # (option)
 #
 NC_CONFIG_JSON_BASE64 : encoded base64 nextcloud_config.json (replace the default nextcloud_config.json)
-
-
+#
+# smtp
+#
+NC_MAIL_DOMAIN
+NC_MAIL_FROM_ADDRESS
+NC_SMTP_AUTHTYPE
+NC_SMTP_HOST
+NC_SMTP_NAME
+NC_SMTP_PASSWORD
+NC_SMTP_PASSWORD_FILE
+NC_SMTP_SECURE
 ```
 
 Add addons:

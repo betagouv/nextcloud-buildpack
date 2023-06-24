@@ -79,7 +79,7 @@ export REDIS_PORT
 if [[ ! -f config/config.php ]] ; then
 
 echo "# prepare config template"
-export NC_CONFIG_TEMPLATE="secret s3 redis"
+export NC_CONFIG_TEMPLATE="secret s3 redis smtp"
 for c in $NC_CONFIG_TEMPLATE; do
   echo "# $c.config.php"
   cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php

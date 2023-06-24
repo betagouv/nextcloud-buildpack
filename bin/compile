@@ -58,6 +58,7 @@ cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud
 cp $basedir/../config/nextcloud/secret.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/s3.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/redis.config.php "$BUILD_DIR/conf/nextcloud/"
+cp $basedir/../config/nextcloud/smtp.config.php "$BUILD_DIR/conf/nextcloud/"
 # nginx
 cp $basedir/../config/nginx/nextcloud.conf.erb "$BUILD_DIR/conf/nginx/"
 # php
