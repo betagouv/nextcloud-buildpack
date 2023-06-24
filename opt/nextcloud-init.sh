@@ -92,7 +92,7 @@ echo "# prepare config template"
 export NC_CONFIG_TEMPLATE="s3 redis"
 for c in $NC_CONFIG_TEMPLATE; do
   echo "# $c.config.php"
-  cp $basedir/conf/$c.config.php config/$c.config.php
+  cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
 done
 
 echo "# Installing with PostgreSQL database"
@@ -132,12 +132,13 @@ php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
 #
 ( set -e
 
-  NC_CONFIG_FILE="$basedir/nextcloud_config.json"
+  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json"
   
   #
   # override NC_CONFIG_FILE if NC_CONFIG_JSON_BASE64 exist
   #
   if [[ -n "${NC_CONFIG_JSON_BASE64}" ]] ; then
+     mkdir -p $(dirname $NC_CONFIG_FILE)
      echo "${NC_CONFIG_JSON_BASE64}" |base64 -d > $NC_CONFIG_FILE
   fi
   #

@@ -49,16 +49,16 @@ rm -rf "$NEXTCLOUD_DOWNLOADS"
 
 echo -n "-----> Install default files... "
 mkdir -p "$BUILD_DIR/bin"
-mkdir -p "$BUILD_DIR/conf"
+mkdir -p "$BUILD_DIR/conf/"{nginx,php,nextcloud}
 mkdir -p "$BUILD_DIR/etc"
 cp $basedir/../Procfile "$BUILD_DIR/"
 cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
 # nextcloud
-cp $basedir/../config/nextcloud_config.json "$BUILD_DIR/conf/"
-cp $basedir/../config/s3.config.php "$BUILD_DIR/conf/"
-cp $basedir/../config/redis.config.php "$BUILD_DIR/conf/"
+cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud/"
+cp $basedir/../config/nextcloud/s3.config.php "$BUILD_DIR/conf/nextcloud/"
+cp $basedir/../config/nextcloud/redis.config.php "$BUILD_DIR/conf/nextcloud/"
 # nginx
-cp $basedir/../config/nextcloud.conf.erb "$BUILD_DIR/conf/nextcloud.conf.erb"
+cp $basedir/../config/nginx/nextcloud.conf.erb "$BUILD_DIR/conf/nginx/"
 # php
 cp $basedir/../composer.* "$BUILD_DIR/"
 cp $basedir/../config/php-redis-session.ini.tmpl "$BUILD_DIR/conf/"
