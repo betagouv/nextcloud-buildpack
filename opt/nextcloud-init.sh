@@ -28,16 +28,6 @@ fi
 #
 # common libs
 #
-render_template() {
-# render a template configuration file
-# expand variables + preserve formatting + preserve quotes
-#
-  eval "cat <<EOF
-$(<$1)
-EOF
-" 2> /dev/null
-}
-
 parse_scheme () {
     echo "$@" | python3 -c 'from urllib.parse import urlparse; import sys; print(urlparse(sys.stdin.read()).scheme)'
 }
@@ -122,7 +112,7 @@ php occ  maintenance:install \
 
 echo "# cleanup config template"
 for c in $NC_CONFIG_TEMPLATE; do
-rm -rf config/$c.config.php
+  rm -rf config/$c.config.php
 done
 
 export OC_PASS=$NC_ADMIN_PASSWORD
@@ -196,5 +186,6 @@ fi
 
 )
 
-echo "# prepare php-redis-session.ini"
-render_template $basedir/conf/php-redis-session.ini.tmpl > etc/php-redis-session.ini
+echo "# prepare includes php ini"
+erb $basedir/conf/php/php-redis-session.ini.erb > etc/php-redis-session.ini
+erb $basedir/conf/php/php-opcache.ini.erb > etc/php-opcache.ini

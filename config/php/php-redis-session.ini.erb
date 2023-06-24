@@ -1,5 +1,5 @@
 session.save_handler = redis
-session.save_path = "tcp://${REDIS_HOST}:${REDIS_PORT}?auth=${REDIS_PASS}"
+session.save_path = "tcp://<%= ENV['REDIS_HOST'] %>:<%= ENV['REDIS_PORT'] %>?auth=<%= ENV['REDIS_PASS'] %>"
 redis.session.locking_enabled = 1
 redis.session.lock_retries = -1
 # redis.session.lock_wait_time is specified in microseconds.
