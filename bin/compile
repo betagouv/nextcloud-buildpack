@@ -55,6 +55,7 @@ cp $basedir/../Procfile "$BUILD_DIR/"
 cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
 # nextcloud
 cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud/"
+cp $basedir/../config/nextcloud/secret.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/s3.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/redis.config.php "$BUILD_DIR/conf/nextcloud/"
 # nginx

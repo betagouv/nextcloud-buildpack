@@ -1,5 +1,6 @@
 {
   "system": {
+    "defaultapp": "file",
     "default_language": "fr",
     "default_locale": "fr",
     "default_phone_region": "FR",
@@ -7,7 +8,8 @@
     "templatedirectory": "",
     "appstoreenabled": false,
     "appstoreurl": "",
-    "updatechecker": false
+    "updatechecker": false,
+    "enable_previews": false
   },
   "apps": {
     "activity": {
