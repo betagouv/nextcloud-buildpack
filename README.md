@@ -60,11 +60,12 @@ NC_CONFIG_SECRET="_REPLACE_"
 #
 NC_TRUSTED_DOMAINS="mydomain.com myother.com"
 #
-# Primary Storage S3
+# Primary Storage S3 (multi bucket)
 #
 OBJECTSTORE_S3_SSL=true
 OBJECTSTORE_S3_KEY=_REPLACE_
-OBJECTSTORE_S3_BUCKET=_REPLACE_
+OBJECTSTORE_S3_NUM_BUCKETS=1 # bucket number to store users file
+OBJECTSTORE_S3_BUCKET=_REPLACE_ # bucket name is the prefix ot the bucket without number
 OBJECTSTORE_S3_HOST=s3.gra.io.cloud.ovh.net
 OBJECTSTORE_S3_REGION=gra
 OBJECTSTORE_S3_SECRET=_REPLACE_
@@ -103,5 +104,7 @@ Add addons:
 - occ command: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 - nginx configuration: https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx
 - primary storage S3: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#simple-storage-service-s3
-- scale S3 bucket: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#multibucket-object-store
+- scale S3 multi bucket: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#multibucket-object-store
+- preview in S3 multi bucket: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html#objectstore-multibucket-preview-distribution
+- cache redis: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/caching_configuration.html?highlight=redis#organizations-with-single-server
 
