@@ -11,7 +11,7 @@ if (getenv('REDIS_URL')) {
       'port' => $redis['port'],
       'password' => (string) $redis['pass'],
       'timeout'       => 1.5,
-      'read_timeout'  => 1.5,
-    ),
+      'read_timeout'  => 1.5
+    )
   );
 }

@@ -79,10 +79,10 @@ export REDIS_PORT
 if [[ ! -f config/config.php ]] ; then
 
 echo "# prepare config template"
-export NC_CONFIG_TEMPLATE="secret s3 redis smtp"
+export NC_CONFIG_TEMPLATE="secret s3 redis smtp base"
 for c in $NC_CONFIG_TEMPLATE; do
   echo "# $c.config.php"
-  cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
+  [ -f "$basedir/conf/nextcloud/$c.config.php" ] && cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
 done
 
 echo "# Installing with PostgreSQL database"
@@ -176,6 +176,8 @@ done
 fi
 
 if php occ config:system:get installed; then
+  echo "# config.php"
+  cat config/config.php
   echo "# config:list"
   php occ config:list
   echo "# app:list"
@@ -184,8 +186,13 @@ if php occ config:system:get installed; then
   php occ status --output=json
 fi
 
+echo "# ls data"
+ls -l $(pwd)/data
+echo "# ls $basedir/data"
+ls -l $basedir/data
 )
 
 echo "# prepare includes php ini"
 erb $basedir/conf/php/php-redis-session.ini.erb > etc/php-redis-session.ini
 erb $basedir/conf/php/php-opcache.ini.erb > etc/php-opcache.ini
+

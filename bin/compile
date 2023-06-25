@@ -31,11 +31,11 @@ mkdir -p $NEXTCLOUD_DOWNLOADS
 
 echo -n "-----> Downloading Nextcloud from $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2 ... "
 ( cd $NEXTCLOUD_DOWNLOADS
-  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.asc
-  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.md5
-  curl -O $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2
+  curl -LO $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.asc
+  curl -LO $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2.md5
+  curl -LO $NEXTCLOUD_URL/nextcloud-$NEXTCLOUD_VERSION.tar.bz2
   md5sum -c nextcloud-$NEXTCLOUD_VERSION.tar.bz2.md5 < nextcloud-$NEXTCLOUD_VERSION.tar.bz2
-  curl -O $NEXTCLOUD_ASC/nextcloud.asc
+  curl -LO $NEXTCLOUD_ASC/nextcloud.asc
   gpg --import nextcloud.asc
   gpg --verify nextcloud-$NEXTCLOUD_VERSION.tar.bz2.asc nextcloud-$NEXTCLOUD_VERSION.tar.bz2
 
@@ -55,6 +55,7 @@ cp $basedir/../Procfile "$BUILD_DIR/"
 cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
 # nextcloud
 cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud/"
+cp $basedir/../config/nextcloud/base.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/secret.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/s3.config.php "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/redis.config.php "$BUILD_DIR/conf/nextcloud/"

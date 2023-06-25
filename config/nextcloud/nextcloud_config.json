@@ -8,8 +8,7 @@
     "templatedirectory": "",
     "appstoreenabled": false,
     "appstoreurl": "",
-    "updatechecker": false,
-    "enable_previews": false
+    "updatechecker": false
   },
   "apps": {
     "activity": {

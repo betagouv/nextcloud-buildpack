@@ -9,7 +9,7 @@ if (getenv('NC_SMTP_HOST') && getenv('NC_MAIL_FROM_ADDRESS') && getenv('NC_MAIL_
     'mail_smtpauthtype' => getenv('NC_SMTP_AUTHTYPE') ?: 'LOGIN',
     'mail_smtpname' => getenv('NC_SMTP_NAME') ?: '',
     'mail_from_address' => getenv('NC_MAIL_FROM_ADDRESS'),
-    'mail_domain' => getenv('NC_MAIL_DOMAIN'),
+    'mail_domain' => getenv('NC_MAIL_DOMAIN')
   );
 
   if (getenv('NC_SMTP_PASSWORD_FILE') && file_exists(getenv('NC_SMTP_PASSWORD_FILE'))) {
