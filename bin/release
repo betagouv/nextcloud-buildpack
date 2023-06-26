@@ -5,8 +5,8 @@ BUILD_DIR=$1
 cat << EOF
 ---
 addons:
-  - postgresql
-  - redis
+  - scalingo-postgresql
+  - scalingo-redis
 default_process_types:
   web: /app/bin/nextcloud.sh
 EOF

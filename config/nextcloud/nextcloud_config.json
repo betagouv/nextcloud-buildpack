@@ -122,7 +122,9 @@
       "enabled": "yes"
     },
     "theming": {
-      "enabled": "no"
+      "enabled": "yes",
+      "backgroundMime": "backgroundColor",
+      "disable-user-theming": "yes"
     },
     "twofactor_backupcodes": {
       "enabled": "yes"

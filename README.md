@@ -2,9 +2,9 @@
 A buildpack for Nextcloud's deployment to Scalingo
 
 
-## envionment
+## Usage
 
-Create a repo `my-nextcloud-app` with following files
+Create a git repo `my-nextcloud-app` with following files
 - `.buildpack`
 ```
 https://github.com/pli01/nextcloud-buildpack#feat-install
@@ -84,14 +84,15 @@ NC_CONFIG_JSON_BASE64 : encoded base64 nextcloud_config.json (replace the defaul
 #
 # smtp
 #
-NC_MAIL_DOMAIN
-NC_MAIL_FROM_ADDRESS
+NC_MAIL_DOMAIN=mydomain.com
+NC_MAIL_FROM_ADDRESS=no-reply@mydomain.com
 NC_SMTP_AUTHTYPE
-NC_SMTP_HOST
-NC_SMTP_NAME
-NC_SMTP_PASSWORD
+NC_SMTP_HOST=smtp.mydoamin.com
+NC_SMTP_PORT=465
+NC_SMTP_NAME=smtp-username
+NC_SMTP_PASSWORD=_REPLACE_
 NC_SMTP_PASSWORD_FILE
-NC_SMTP_SECURE
+NC_SMTP_SECURE=ssl
 ```
 
 Add addons:
@@ -100,6 +101,29 @@ Add addons:
 
 ## Tips and Docs
 
+### Scalingo command reminder
+
+```
+# stop
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} scale web:0
+# Create addons
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} addons-add postgresql postgresql-starter-1024
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} addons-add redis redis-starter-512
+# start app
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} scale web:1
+# bash console
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} run bash
+# postgresql console
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} pgsql-console
+# redis console
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} redis-console
+# build logs
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} deployment-logs
+# run logs
+scalingo --region ${SCALINGO_REGION} --app ${MYAPP} logs -n 100
+```
+
+### Docs
 - config: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html
 - occ command: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 - nginx configuration: https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx

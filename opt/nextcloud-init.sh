@@ -78,7 +78,7 @@ export REDIS_PORT
 #
 if [[ ! -f config/config.php ]] ; then
 
-echo "# prepare config template"
+echo "# prepare config.php template"
 export NC_CONFIG_TEMPLATE="secret s3 redis smtp base"
 for c in $NC_CONFIG_TEMPLATE; do
   echo "# $c.config.php"
@@ -88,14 +88,14 @@ done
 echo "# Installing with PostgreSQL database"
 
 echo "# reset ${NC_ADMIN_USER} account"
-( set +e 
+( set +e
   DB_NC_IS_INSTALLED=$(psql $DATABASE_URL -qAt -c "SELECT true as exists FROM information_schema.tables WHERE table_type='BASE TABLE' AND table_schema='public'  AND table_name='oc_users';")
   if [[ -n "${DB_NC_IS_INSTALLED}" ]] ; then
     psql $DATABASE_URL -c "DELETE FROM oc_users WHERE uid='${NC_ADMIN_USER}'" || true
   fi
 )
 #
-# configure
+# first configuration
 #
 php occ  maintenance:install \
   --database=pgsql \
@@ -115,30 +115,8 @@ for c in $NC_CONFIG_TEMPLATE; do
   rm -rf config/$c.config.php
 done
 
-export OC_PASS=$NC_ADMIN_PASSWORD
-php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
-#
-# import config set
-#
-( set -e
-
-  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json"
-  
-  #
-  # override NC_CONFIG_FILE if NC_CONFIG_JSON_BASE64 exist
-  #
-  if [[ -n "${NC_CONFIG_JSON_BASE64}" ]] ; then
-     mkdir -p $(dirname $NC_CONFIG_FILE)
-     echo "${NC_CONFIG_JSON_BASE64}" |base64 -d > $NC_CONFIG_FILE
-  fi
-  #
-  # import nextcloud config
-  #
-  if [[ -f "${NC_CONFIG_FILE}" ]] ; then
-   php occ config:import "${NC_CONFIG_FILE}"
-   rm -rf "${NC_CONFIG_FILE}"
-  fi
-) || exit $?
+# export OC_PASS=$NC_ADMIN_PASSWORD
+# php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
 
 # trusted_domains
 if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
@@ -152,10 +130,11 @@ if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
 fi
 
 # configure app theme
+echo "Setting login page"
 php occ theming:config name "${NC_THEMING_CONFIG_NAME:-Beta}"
 php occ theming:config url "${NC_THEMING_CONFIG_URL:-www.google.fr}"
 php occ theming:config slogan "${NC_THEMING_CONFIG_SLOGAN:-Have fun !}"
-php occ theming:config disable-user-theming "${NC_THEMING_CONFIG_DISABLE_USER:yes}"
+php occ theming:config disable-user-theming "${NC_THEMING_CONFIG_DISABLE_USER:-yes}"
 [[ -n "${NC_THEMING_CONFIG_LOGO}" ]] && php occ theming:config logo "${NC_THEMING_CONFIG_LOGO}"
 
 #
@@ -166,12 +145,36 @@ if [[ -z "$NC_APP_DISABLE" ]]; then
   nextcloud_announcements
   survey_client
   user_ldap
-  weather_status" 
+  weather_status"
 fi
 
 for app in ${NC_APP_DISABLE}; do
   php occ app:disable $app
 done
+
+#
+# import config set
+#
+( set -e
+
+  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json"
+
+  #
+  # override NC_CONFIG_FILE if NC_CONFIG_JSON_BASE64 exist
+  #
+  if [[ -n "${NC_CONFIG_JSON_BASE64}" ]] ; then
+     echo "## import config from NC_CONFIG_JSON_BASE64"
+     mkdir -p $(dirname $NC_CONFIG_FILE)
+     echo "${NC_CONFIG_JSON_BASE64}" |base64 -d > $NC_CONFIG_FILE
+  fi
+  #
+  # import nextcloud config
+  #
+  if [[ -f "${NC_CONFIG_FILE}" ]] ; then
+   echo "## import config from nextcloud_config.json"
+   php occ config:import "${NC_CONFIG_FILE}"
+  fi
+) || exit $?
 
 fi
 
@@ -188,8 +191,6 @@ fi
 
 echo "# ls data"
 ls -l $(pwd)/data
-echo "# ls $basedir/data"
-ls -l $basedir/data
 )
 
 echo "# prepare includes php ini"

@@ -5,11 +5,11 @@
       "nextcloud", "stockage"
     ],
     "env": {},
-    "addons": ["postgresql:postgresql-sandbox"],
+    "addons": ["postgresql:postgresql-starter-1024","redis:redis-starter-512"],
     "formation": {
       "web": {
         "amount": 1,
-        "size": "S"
+        "size": "M"
       }
     },
     "postdeploy": ""
