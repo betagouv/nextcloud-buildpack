@@ -86,6 +86,9 @@
     "notifications": {
       "enabled": "no"
     },
+    "oidc_login": {
+      "enabled": "yes"
+    },
     "oauth2": {
       "enabled": "no"
     },
