@@ -14,6 +14,13 @@
     "activity": {
       "enabled": "no"
     },
+    "core": {
+       "shareapi_enabled": "yes",
+       "shareapi_allow_resharing": "no",
+       "shareapi_allow_public_upload": "no",
+       "shareapi_default_permission_canshare": "no",
+       "shareapi_default_permissions": 15
+    },
     "circles": {
       "enabled": "no"
     },
@@ -54,7 +61,9 @@
       "enabled": "yes"
     },
     "files_sharing": {
-      "enabled": "no"
+      "enabled": "yes",
+      "outgoing_server2server_share_enabled": "no",
+      "incoming_server2server_share_enabled": "no"
     },
     "files_trashbin": {
       "enabled": "no"
