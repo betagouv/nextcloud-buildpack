@@ -89,12 +89,13 @@ $CONFIG = array (
     // note: on Keycloak, OIDC name claim = "${given_name} ${family_name}" or one of them if any is missing
     //
     'oidc_login_attributes' => array (
-        'id' => 'preferred_username',
+        'id' => 'email',
+        'name' => 'name',
         'mail' => 'email'
     ),
 
     // Default group to add users to (optional, defaults to nothing)
-    'oidc_login_default_group' => 'oidc',
+    'oidc_login_default_group' => '',
 
 
     // Allow only users in configured value(s) to access Nextcloud. In case the user
@@ -151,7 +152,7 @@ $CONFIG = array (
 
     // If you get your groups from the oidc_login_attributes, you might want
     // to create them if they are not already existing, Default is `false`.
-    'oidc_create_groups' => false,
+    'oidc_create_groups' => true,
 
     // Enable use of WebDAV via OIDC bearer token.
     'oidc_login_webdav_enabled' => false,
@@ -187,5 +188,5 @@ $CONFIG = array (
     //	- 'S256'
     //	- 'plain'
     // The default value is empty, which won't apply the PKCE flow.
-    'oidc_login_code_challenge_method' => '',
+    'oidc_login_code_challenge_method' => getenv('NC_OIDC_LOGIN_CODE_CHALLENGE_METHOD') ?: '',
 );

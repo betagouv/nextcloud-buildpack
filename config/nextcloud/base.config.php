@@ -8,7 +8,11 @@ $CONFIG = array (
   // enable previews
   'enable_previews' => true,
   // theme
-  'theme' => ''
+  'theme' => '',
+  'log_type' => 'errorlog',
+  'log_type_audit' => 'errorlog',
+  'loglevel' => 0,
+  'loglevel_frontend' => 0
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
