@@ -194,6 +194,7 @@ ls -l $(pwd)/data
 )
 
 echo "# prepare includes php ini"
+erb $basedir/conf/php/php-pgsql.ini.erb > etc/php-pgsql.ini
 erb $basedir/conf/php/php-redis-session.ini.erb > etc/php-redis-session.ini
 erb $basedir/conf/php/php-opcache.ini.erb > etc/php-opcache.ini
 

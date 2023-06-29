@@ -77,6 +77,7 @@ done
 cp $basedir/../config/nginx/nextcloud.conf.erb "$BUILD_DIR/conf/nginx/"
 # php
 cp $basedir/../composer.* "$BUILD_DIR/"
+cp $basedir/../config/php/php-pgsql.ini.erb "$BUILD_DIR/conf/php/"
 cp $basedir/../config/php/php-redis-session.ini.erb "$BUILD_DIR/conf/php/"
 cp $basedir/../config/php/php-opcache.ini.erb "$BUILD_DIR/conf/php/"
 

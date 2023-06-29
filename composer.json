@@ -3,7 +3,7 @@
     "ext-gmp": "*",
     "ext-imagick": "*"
   },
-  "php-includes": ["etc/php-redis-session.ini", "etc/php-opcache.ini"],
+  "php-includes": ["etc/php-pgsql.ini", "etc/php-redis-session.ini", "etc/php-opcache.ini"],
   "extra": {
     "paas": {
       "document-root": "nextcloud",
