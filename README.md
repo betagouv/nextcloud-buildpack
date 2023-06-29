@@ -1,13 +1,24 @@
 # nextcloud-buildpack
 A buildpack for Nextcloud's deployment to Scalingo
 
+For testing purpose
+
+This buildpack configure one single instance of nextcloud with
+- php-fpm/nginx buildpack
+- Postgresql DB
+- Redis cache
+- S3 storage
+- OpenID connect
+
+
+![schema](docs/images/nextcloud-buildpack.png)
 
 ## Usage
 
 Create a git repo `my-nextcloud-app` with following files
 - `.buildpack`
 ```
-https://github.com/pli01/nextcloud-buildpack#feat-install
+https://github.com/pli01/nextcloud-buildpack#main
 https://github.com/Scalingo/php-buildpack
 ```
 
@@ -58,7 +69,7 @@ NC_CONFIG_SECRET="_REPLACE_"
 #
 # Trusted domain
 #
-NC_TRUSTED_DOMAINS="mydomain.com myother.com"
+NC_TRUSTED_DOMAINS="mydomain.com"
 #
 # Primary Storage S3 (multi bucket)
 #
@@ -87,12 +98,21 @@ NC_CONFIG_JSON_BASE64 : encoded base64 nextcloud_config.json (replace the defaul
 NC_MAIL_DOMAIN=mydomain.com
 NC_MAIL_FROM_ADDRESS=no-reply@mydomain.com
 NC_SMTP_AUTHTYPE
-NC_SMTP_HOST=smtp.mydoamin.com
+NC_SMTP_HOST=smtp.mydomain.com
 NC_SMTP_PORT=465
 NC_SMTP_NAME=smtp-username
 NC_SMTP_PASSWORD=_REPLACE_
 NC_SMTP_PASSWORD_FILE
 NC_SMTP_SECURE=ssl
+#
+# openid (oidc)
+#
+NC_OIDC_LOGIN_CLIENT_ID=_REPLACE_
+NC_OIDC_LOGIN_CLIENT_SECRET=_REPLACE_
+NC_OIDC_LOGIN_CODE_CHALLENGE_METHOD=S256
+NC_OIDC_LOGIN_LOGOUT_URL=https://my-domain.com/apps/oidc_login/oidc
+NC_OIDC_LOGIN_PROVIDER_URL=https://oidc.my-domain.com/realms/MY_REALM
+NC_OIDC_LOGIN_SCOPE="openid profile email"
 ```
 
 Add addons:
@@ -127,8 +147,9 @@ scalingo --region ${SCALINGO_REGION} --app ${MYAPP} logs -n 100
 - config: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html
 - occ command: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 - nginx configuration: https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx
+- postgresql: https://docs.nextcloud.com/server/latest/admin_manual/configuration_database/linux_database_configuration.html#postgresql-database
 - primary storage S3: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#simple-storage-service-s3
 - scale S3 multi bucket: https://docs.nextcloud.com/server/24/admin_manual/configuration_files/primary_storage.html#multibucket-object-store
 - preview in S3 multi bucket: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html#objectstore-multibucket-preview-distribution
 - cache redis: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/caching_configuration.html?highlight=redis#organizations-with-single-server
-
+- oidc : https://github.com/pulsejet/nextcloud-oidc-login
