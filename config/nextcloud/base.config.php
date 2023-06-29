@@ -11,8 +11,8 @@ $CONFIG = array (
   'theme' => '',
   'log_type' => 'errorlog',
   'log_type_audit' => 'errorlog',
-  'loglevel' => 0,
-  'loglevel_frontend' => 0
+  'loglevel' => getenv('NC_CONFIG_LOGLEVEL') ?: 2,
+  'loglevel_frontend' => getenv('NC_CONFIG_LOGLEVEL_FRONTEND') ?: 2
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
