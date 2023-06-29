@@ -1,9 +1,9 @@
 {
   "require": {
     "ext-gmp": "*",
-    "ext-imagick": "*"
+    "ext-imagick": "*",
+    "ext-redis": "*"
   },
-  "php-includes": ["etc/php-pgsql.ini", "etc/php-redis-session.ini", "etc/php-opcache.ini"],
   "extra": {
     "paas": {
       "document-root": "nextcloud",
