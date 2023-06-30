@@ -3,6 +3,16 @@ $CONFIG = array (
     // Some Nextcloud options that might make sense here
     'allow_user_to_change_display_name' => false,
     'lost_password_link' => 'disabled',
+    'hide_login_form' => false,
+
+    // Login button text
+    'oidc_login_button_text' => 'Log in with OpenID',
+
+    // Hide the NextCloud password change form.
+    'oidc_login_hide_password_form' => false,
+    //
+    // Automatically redirect the login page to the provider
+    'oidc_login_auto_redirect' => false,
 
     // URL of provider. All other URLs are auto-discovered from .well-known
     'oidc_login_provider_url' => getenv('NC_OIDC_LOGIN_PROVIDER_URL'),
@@ -10,9 +20,6 @@ $CONFIG = array (
     // Client ID and secret registered with the provider
     'oidc_login_client_id' => getenv('NC_OIDC_LOGIN_CLIENT_ID'),
     'oidc_login_client_secret' => getenv('NC_OIDC_LOGIN_CLIENT_SECRET'),
-
-    // Automatically redirect the login page to the provider
-    'oidc_login_auto_redirect' => true,
 
     // Redirect to this page after logging out the user
     'oidc_login_logout_url' => getenv('NC_OIDC_LOGIN_LOGOUT_URL'),
@@ -28,12 +35,6 @@ $CONFIG = array (
     // NOTE: If you want to allow NextCloud to manage quotas, omit this option. Do not set it to
     // zero or -1 or ''.
     'oidc_login_default_quota' => '1000000000',
-
-    // Login button text
-    'oidc_login_button_text' => 'Log in with OpenID',
-
-    // Hide the NextCloud password change form.
-    'oidc_login_hide_password_form' => false,
 
     // Use ID Token instead of UserInfo
     'oidc_login_use_id_token' => false,
