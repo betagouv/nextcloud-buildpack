@@ -1,4 +1,5 @@
 <?php
+if (getenv('NC_OIDC_LOGIN_PROVIDER_URL') && getenv('NC_OIDC_LOGIN_CLIENT_ID') && getenv('NC_OIDC_LOGIN_CLIENT_SECRET')) {
 $CONFIG = array (
     // Some Nextcloud options that might make sense here
     'allow_user_to_change_display_name' => false,
@@ -191,3 +192,4 @@ $CONFIG = array (
     // The default value is empty, which won't apply the PKCE flow.
     'oidc_login_code_challenge_method' => getenv('NC_OIDC_LOGIN_CODE_CHALLENGE_METHOD') ?: '',
 );
+}
