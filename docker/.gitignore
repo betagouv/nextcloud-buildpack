@@ -1,0 +1,6 @@
+*.env
+.env
+postgresql
+redis
+s3
+*.tar.gz

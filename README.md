@@ -10,7 +10,6 @@ This buildpack configure one single instance of nextcloud with
 - S3 storage
 - OpenID connect
 
-
 ![schema](docs/images/nextcloud-buildpack.png)
 
 ## Usage
@@ -118,6 +117,12 @@ NC_OIDC_LOGIN_SCOPE="openid profile email"
 Add addons:
  - postgresql postgresql-starter-1024
  - redis redis-starter-512
+
+## Local dev environment
+
+There is a development stack based on docker-compose and scalingo images
+
+More information under `docker` directory and README file
 
 ## Tips and Docs
 

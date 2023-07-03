@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  redis:
+    image: scalingo/redis
+    #ports:
+    #  - "6379:6379"
+    volumes:
+      - ./redis:/var/lib/redis
+    command: /redis
+    environment:
+      DB_PASSWORD: ${REDIS_PASSWORD:-password}
+      DB_UID: ${UID} # current uid
+  postgresql:
+    image: postgres
+    #ports:
+    # - "5432:5432"
+    volumes:
+      - ./postgresql:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      DB_UID: ${UID}
+  smtp:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+        - 1025:1025
+        - 8025:8025
+  s3:
+    image: minio/minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio123}
+    command:  ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - ./s3:/data
+    restart: 'always'
+    ports:
+      - 9000:9000
+      - 9001:9001
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - s3
+    environment:
+      MINIO_ENV_MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minio}
+      MINIO_ENV_MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minio123}
+      MINIO_BUCKET: ${MINIO_BUCKET:-nextcloud-0}
+    entrypoint: >
+      /bin/bash -xc '
+        while [[ "$(curl -s -o /dev/null -w "%{http_code}" http://s3:9000/minio/health/live)" != 200 && "$(curl -s -o /dev/null -w "%{http_code}" http://s3:9000/minio/health/live)" != 301 ]]; do sleep 1; done ; \
+        sleep 5 && \
+        mc config host add myminio http://s3:9000 $$MINIO_ENV_MINIO_ACCESS_KEY $$MINIO_ENV_MINIO_SECRET_KEY && \
+        mc rm -r --force myminio/$$MINIO_BUCKET || true && \
+        mc mb myminio/$$MINIO_BUCKET || true
+      '
+  web:
+    image: ${SCALINGO_NEXTCLOUD_IMAGE:-scalingo-nextcloud-app:latest}
+    build: .
+    ports:
+      - "80:80"
+    user: appsdeck
+    command: "bash -xc 'sleep 30 ; /start web /app/bin/nextcloud.sh'"
+    depends_on:
+      - redis
+      - postgresql
+      - smtp
+      - s3
+      - createbuckets
+    # To override and test config
+    #volumes:
+      #- ./nextcloud_config.json:/app/conf/nextcloud/nextcloud_config.json
+      #- ../opt/nextcloud-init.sh:/app/bin/nextcloud-init.sh
+    environment:
+      HOME: /app
+      PORT: 80 # dev mode listen on http
+      NC_CONFIG_OVERWRITEPROTOCOL: http
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@postgresql:5432/${DB_USER}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      NC_ADMIN_EMAIL: ${NC_ADMIN_EMAIL}
+      NC_ADMIN_PASSWORD: ${NC_ADMIN_PASSWORD}
+      NC_ADMIN_USER: ${NC_ADMIN_USER}
+      NC_TRUSTED_DOMAINS: ${NC_TRUSTED_DOMAINS}
+      NC_MAIL_DOMAIN: mydomain.com
+      NC_MAIL_FROM_ADDRESS: no-reply
+      NC_SMTP_HOST: ${NC_SMTP_HOST:-smtp}
+      NC_SMTP_NAME: ${NC_SMTP_NAME:-}
+      NC_SMTP_PASSWORD: ${NC_SMTP_PASSWORD:-}
+      NC_SMTP_PORT: ${NC_SMTP_PORT:-1025}
+      NC_SMTP_SECURE: ${NC_SMTP_SECURE:-}
+      OBJECTSTORE_S3_AUTOCREATE: true
+      OBJECTSTORE_S3_HOST: s3:9000
+      OBJECTSTORE_S3_BUCKET: nextcloud-
+      OBJECTSTORE_S3_NUM_BUCKETS: 1
+      OBJECTSTORE_S3_SSL: false
+      OBJECTSTORE_S3_KEY: ${MINIO_ROOT_USER:-minio}
+      OBJECTSTORE_S3_SECRET: ${MINIO_ROOT_PASSWORD:-minio123}
+      OBJECTSTORE_S3_USEPATH_STYLE: true
