@@ -12,8 +12,12 @@ fi
 
 echo "# Init nextcloud"
 
-if [[ -z "$SCALINGO_POSTGRESQL_URL" ]]; then
-  echo >&2 "The environment variable SCALINGO_POSTGRESQL_URL must be set. The default user should be updated with the CREATEROLE privilege."
+if [[ -z "$DATABASE_URL" ]]; then
+  echo >&2 "The environment variable DATABASE_URL must be set. The default user should be updated with the CREATEROLE privilege."
+  exit -1
+fi
+if [[ -z "$REDIS_URL" ]]; then
+  echo >&2 "The environment variable REDIS_URL must be set."
   exit -1
 fi
 if [[ -z "$NC_ADMIN_USER" ]]; then

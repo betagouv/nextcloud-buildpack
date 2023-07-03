@@ -16,8 +16,9 @@ $CONFIG = array (
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
+$overwriteProtocol = getenv('NC_CONFIG_OVERWRITEPROTOCOL') ?: 'https';
 if ($trustedDomains) {
-  $CONFIG['overwrite.cli.url'] = 'https://'.$trustedDomains;
-  $CONFIG['overwriteprotocol'] = 'https';
+  $CONFIG['overwrite.cli.url'] = $overwriteProtocol.'://'.$trustedDomains;
+  $CONFIG['overwriteprotocol'] = $overwriteProtocol;
   $CONFIG['overwritehost'] = $trustedDomains;
 }
