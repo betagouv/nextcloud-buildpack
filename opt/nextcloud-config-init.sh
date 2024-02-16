@@ -82,4 +82,4 @@ done
 
 echo "# ls data"
 ls -l $(pwd)/data
-)
+fi )
