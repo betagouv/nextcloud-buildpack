@@ -75,11 +75,30 @@ for c in $NC_CONFIG_TEMPLATE; do
   [ -f "$basedir/conf/nextcloud/$c.config.php" ] && cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
 done
 
-echo "# cleanup config template"
-for c in $NC_CONFIG_TEMPLATE; do
-  rm -rf config/$c.config.php
-done
+php occ  maintenance:install \
+  --database=pgsql \
+  --database-name=${DATABASE_NAME} \
+  --database-host=${DATABASE_HOST} \
+  --database-port=${DATABASE_PORT} \
+  --database-user=${DATABASE_USER} \
+  --database-pass=${DATABASE_PASS} \
+  --admin-user=${NC_ADMIN_USER} \
+  --admin-pass=${NC_ADMIN_PASSWORD} \
+  --admin-email=${NC_ADMIN_EMAIL} \
+  --no-ansi \
+  -n
 
 echo "# ls data"
 ls -l $(pwd)/data
 fi )
+
+
+echo "# prepare includes php ini"
+php_conf_dir="vendor/php/etc/conf.d/"
+erb $basedir/conf/php/php-pgsql.ini.erb > ${php_conf_dir}/php-pgsql.ini
+erb $basedir/conf/php/php-redis-session.ini.erb > ${php_conf_dir}/php-redis-session.ini
+erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
+erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
+echo "# End init"
+
+
