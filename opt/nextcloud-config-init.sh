@@ -92,6 +92,32 @@ echo "# ls data"
 ls -l $(pwd)/data
 fi )
 
+#
+# import config set
+#
+( set -e
+
+  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json"
+
+  #
+  # override NC_CONFIG_FILE if NC_CONFIG_JSON_BASE64 exist
+  #
+  if [[ -n "${NC_CONFIG_JSON_BASE64}" ]] ; then
+     echo "## import config from NC_CONFIG_JSON_BASE64"
+     mkdir -p $(dirname $NC_CONFIG_FILE)
+     echo "${NC_CONFIG_JSON_BASE64}" |base64 -d > $NC_CONFIG_FILE
+  fi
+  #
+  # import nextcloud config
+  #
+  if [[ -f "${NC_CONFIG_FILE}" ]] ; then
+   echo "## import config from nextcloud_config.json"
+   php occ config:import "${NC_CONFIG_FILE}"
+  fi
+) || exit $?
+
+fi
+
 
 echo "# prepare includes php ini"
 php_conf_dir="vendor/php/etc/conf.d/"
