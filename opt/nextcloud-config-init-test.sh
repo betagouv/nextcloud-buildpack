@@ -1,3 +1,4 @@
+#!/bin/bash
 basedir="/app"
 
 if [ -n "$DEBUG" ]; then
