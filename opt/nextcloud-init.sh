@@ -161,7 +161,7 @@ done
 #
 ( set -e
 
-  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json.erb"
+  NC_CONFIG_FILE="$basedir/conf/nextcloud/nextcloud_config.json"
 
   #
   # override NC_CONFIG_FILE if NC_CONFIG_JSON_BASE64 exist
