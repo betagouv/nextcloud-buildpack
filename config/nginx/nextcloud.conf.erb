@@ -80,7 +80,7 @@ server {
 
     <% if ENV['NGINX_PASSWORD'] %>
     auth_basic           "Protected Site User: <%= ENV['NGINX_USER'] %>";
-    auth_basic_user_file "/app/config/htpasswd";
+    auth_basic_user_file "/app/conf/htpasswd";
     <% end %>
 
     # Rule borrowed from `.htaccess` to handle Microsoft DAV clients
