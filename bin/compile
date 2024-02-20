@@ -69,7 +69,7 @@ cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
 cp $basedir/../config/apps.txt "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud/"
 # Copy template config.php
-NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc"
+NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc db"
 for c in $NC_CONFIG_TEMPLATE; do
 cp $basedir/../config/nextcloud/$c.config.php "$BUILD_DIR/conf/nextcloud/"
 done
