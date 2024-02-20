@@ -12,6 +12,7 @@ $db_password = $parsed_url['pass'];
 
 
 $CONFIG = array (
+  'dbtype' => 'pgsql',
   'dbname' => $dbname,
   'dbhost' => $dbhost.':'.$dbport,
   'dbport' => '',
