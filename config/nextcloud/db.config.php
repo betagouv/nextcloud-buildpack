@@ -13,8 +13,8 @@ $db_password = $parsed_url['pass'];
 
 $CONFIG = array (
   'dbname' => $dbname,
-  'dbhost' => $dbhost,
-  'dbport' => $dbport,
+  'dbhost' => $dbhost.':'.$dbport,
+  'dbport' => '',
   'dbtableprefix' => 'oc_',
   'dbuser' => $db_user,
   'dbpassword' => $db_password,
