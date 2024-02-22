@@ -12,5 +12,12 @@
         "size": "M"
       }
     },
+    {
+      "jobs": [
+        {
+          "command": "*/10 * * * * sh /app/bin/cron.sh",
+        }
+      ]
+    },
     "postdeploy": ""
 }
