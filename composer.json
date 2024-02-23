@@ -4,6 +4,9 @@
     "ext-imagick": "*",
     "ext-redis": "*"
   },
+  "php-config": [
+    "memory_limit=512M"
+  ],
   "extra": {
     "paas": {
       "document-root": "nextcloud",
