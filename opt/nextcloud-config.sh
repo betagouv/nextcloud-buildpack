@@ -79,6 +79,8 @@ fi
 )
 
 cd $basedir/nextcloud
+
+touch  data/.ocdata
 #
 # app
 #
