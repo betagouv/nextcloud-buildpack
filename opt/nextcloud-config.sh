@@ -80,6 +80,7 @@ fi
 
 cd $basedir/nextcloud
 
+mkdir  data
 touch  data/.ocdata
 #
 # app
