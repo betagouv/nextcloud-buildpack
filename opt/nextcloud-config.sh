@@ -77,3 +77,17 @@ for c in $NC_CONFIG_TEMPLATE; do
 done
 fi
 )
+
+
+#
+# app
+#
+if [[ -z "$NC_APP_ENABLE" ]]; then
+  NC_APP_ENABLE="files_external"
+fi
+
+for app in ${NC_APP_ENABLE}; do
+  php occ app:enable $app
+done
+
+php occ upgrade
