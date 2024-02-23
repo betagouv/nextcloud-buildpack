@@ -15,6 +15,7 @@ $CONFIG = array (
   'loglevel_frontend' => getenv('NC_CONFIG_LOGLEVEL_FRONTEND') ?: 2,
   'instanceid' => getenv('NC_INSTANCEID'),
   'version' => getenv('NC_VERSION'),
+  'datadirectory' => '/app/nextcloud/data',
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
