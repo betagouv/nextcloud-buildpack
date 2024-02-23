@@ -14,6 +14,7 @@ $CONFIG = array (
   'loglevel' => getenv('NC_CONFIG_LOGLEVEL') ?: 2,
   'loglevel_frontend' => getenv('NC_CONFIG_LOGLEVEL_FRONTEND') ?: 2,
   'instanceid' => getenv('NC_INSTANCEID'),
+  'version' => getenv('NC_VERSION'),
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
