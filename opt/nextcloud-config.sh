@@ -87,7 +87,7 @@ if [[ -z "$NC_APP_ENABLE" ]]; then
 fi
 
 for app in ${NC_APP_ENABLE}; do
-  php occ app:enable $app
+  php $basedir/nextcloud/occ app:enable $app
 done
 
-php occ upgrade
+php $basedir/nextcloud/occ upgrade
