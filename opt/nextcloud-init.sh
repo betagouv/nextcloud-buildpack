@@ -136,7 +136,7 @@ fi
 # configure app theme
 echo "Setting login page"
 php occ theming:config name "${NC_THEMING_CONFIG_NAME:-Beta}"
-php occ theming:config url "${NC_THEMING_CONFIG_URL:-www.google.fr}"
+php occ theming:config url "${NC_THEMING_CONFIG_URL:-beta.gouv.fr}"
 php occ theming:config slogan "${NC_THEMING_CONFIG_SLOGAN:-Have fun !}"
 php occ theming:config disable-user-theming "${NC_THEMING_CONFIG_DISABLE_USER:-yes}"
 [[ -n "${NC_THEMING_CONFIG_LOGO}" ]] && php occ theming:config logo "${NC_THEMING_CONFIG_LOGO}"
