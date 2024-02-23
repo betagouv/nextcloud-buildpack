@@ -77,6 +77,12 @@ server {
     # always provides the desired behaviour.
     index index.php index.html /index.php$request_uri;
 
+
+    <% if ENV['NGINX_PASSWORD'] %>
+    auth_basic           "Protected Site User: <%= ENV['NGINX_USER'] %>";
+    auth_basic_user_file "/app/conf/htpasswd";
+    <% end %>
+
     # Rule borrowed from `.htaccess` to handle Microsoft DAV clients
     location = / {
         if ( $http_user_agent ~ ^DavClnt ) {
