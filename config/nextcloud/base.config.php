@@ -13,7 +13,7 @@ $CONFIG = array (
   'log_type_audit' => 'errorlog',
   'loglevel' => getenv('NC_CONFIG_LOGLEVEL') ?: 2,
   'loglevel_frontend' => getenv('NC_CONFIG_LOGLEVEL_FRONTEND') ?: 2,
-  'instanceid' => 'ocxl4ele2dpm',
+  'instanceid' => getenv('NC_INSTANCEID'),
 );
 
 $trustedDomains = getenv('NC_TRUSTED_DOMAINS');
