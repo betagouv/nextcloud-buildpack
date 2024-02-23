@@ -20,5 +20,4 @@ $CONFIG = array (
   'dbuser' => $db_user,
   'dbpassword' => $db_password,
   'installed' => true,
-  'instanceid' => '',
 );
