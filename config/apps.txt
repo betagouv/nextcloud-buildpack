@@ -1,4 +1,4 @@
 https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.6.0/oidc_login.tar.gz
-https://github.com/nextcloud-releases/fulltextsearch/releases/download/28.0.0/fulltextsearch-28.0.0.tar.gz
-https://github.com/nextcloud-releases/fulltextsearch_elasticsearch/releases/download/28.0.0/fulltextsearch_elasticsearch-28.0.0.tar.gz
-https://github.com/nextcloud-releases/files_fulltextsearch/releases/download/28.0.0/files_fulltextsearch-28.0.0.tar.gz
+https://github.com/nextcloud-releases/fulltextsearch/releases/download/27.0.3/fulltextsearch-27.0.3.tar.gz
+https://github.com/nextcloud-releases/fulltextsearch_elasticsearch/releases/download/27.0.5/fulltextsearch_elasticsearch-27.0.5.tar.gz
+https://github.com/nextcloud-releases/files_fulltextsearch/releases/download/27.0.1/files_fulltextsearch-27.0.1.tar.gz
