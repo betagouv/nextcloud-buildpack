@@ -9,4 +9,4 @@ fi
 echo "# Init nextcloud"
 bin/nextcloud-config.sh
 
-php -d memory_limit=512M nextcloud/cron.php
+php -f nextcloud/cron.php
