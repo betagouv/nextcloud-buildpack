@@ -95,9 +95,9 @@ fi
 
 cd $basedir/nextcloud
 
-mkdir -p "data/data/appdata_${NC_INSTANCEID}/appstore"
+mkdir -p "data/appdata_${NC_INSTANCEID}/appstore"
 touch  data/.ocdata
-touch  "data/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+touch  "data/appdata_${NC_INSTANCEID}/appstore/apps.json"
 
 #
 # app
