@@ -78,10 +78,25 @@ done
 fi
 )
 
+# export OC_PASS=$NC_ADMIN_PASSWORD
+# php occ user:resetpassword ${NC_ADMIN_USER} --password-from-env
+
+# trusted_domains
+if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
+    echo "Setting trusted domains...";
+    NC_TRUSTED_DOMAIN_IDX=0;
+    for DOMAIN in $NC_TRUSTED_DOMAINS ; do
+        DOMAIN=$(echo "$DOMAIN" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//');
+        php occ config:system:set trusted_domains $NC_TRUSTED_DOMAIN_IDX --value=$DOMAIN
+        NC_TRUSTED_DOMAIN_IDX=$((NC_TRUSTED_DOMAIN_IDX+1));
+    done;
+fi
+
 cd $basedir/nextcloud
 
 mkdir  data
 touch  data/.ocdata
+
 #
 # app
 #
