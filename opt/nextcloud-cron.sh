@@ -4,7 +4,7 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 #
-# init nextcloud config
+# init php with includes
 #
 basedir="/app"
 echo "# prepare includes php ini"
@@ -15,7 +15,5 @@ erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
 erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
 echo "# End init"
 
-echo "# Init nextcloud"
-bin/nextcloud-config.sh
 
 php -f nextcloud/cron.php

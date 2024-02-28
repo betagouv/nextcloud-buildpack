@@ -197,10 +197,19 @@ echo "# ls data"
 ls -l $(pwd)/data
 )
 
+#
+# init php with includes
+#
 echo "# prepare includes php ini"
 php_conf_dir="vendor/php/etc/conf.d/"
 erb $basedir/conf/php/php-pgsql.ini.erb > ${php_conf_dir}/php-pgsql.ini
 erb $basedir/conf/php/php-redis-session.ini.erb > ${php_conf_dir}/php-redis-session.ini
 erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
 erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
+
+#
+# init htpasswd for basic auth
+#
+echo $NGINX_USER:$NGINX_PASSWORD > conf/htpasswd
+
 echo "# End init"

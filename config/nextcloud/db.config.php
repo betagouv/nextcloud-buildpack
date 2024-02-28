@@ -19,5 +19,4 @@ $CONFIG = array (
   'dbtableprefix' => 'oc_',
   'dbuser' => $db_user,
   'dbpassword' => $db_password,
-  'installed' => true,
 );

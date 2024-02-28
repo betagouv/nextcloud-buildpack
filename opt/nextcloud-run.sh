@@ -3,15 +3,8 @@
 if [ -n "$DEBUG" ]; then
   set -x
 fi
-#
-# init nextcloud config
-#
-echo "# Init nextcloud"
-bin/nextcloud-init.sh
-#
-# init htpasswd for basic auth
-#
-echo $NGINX_USER:$NGINX_PASSWORD > conf/htpasswd
+
+
 #
 # init nginx config
 #
