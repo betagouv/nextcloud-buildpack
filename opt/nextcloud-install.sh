@@ -198,6 +198,11 @@ ls -l $(pwd)/data
 )
 
 #
+# set background job to cron, instead of default ajax
+#
+php background:cron
+
+#
 # init php with includes
 #
 echo "# prepare includes php ini"
