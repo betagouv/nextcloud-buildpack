@@ -12,5 +12,5 @@
         "size": "M"
       }
     },
-    "postdeploy": ""
+    "first-deploy": "/app/bin/nextcloud-install.sh"
 }
