@@ -6,19 +6,16 @@ fi
 #
 # init nextcloud config
 #
+basedir="/app"
+echo "# prepare includes php ini"
+php_conf_dir="vendor/php/etc/conf.d/"
+erb $basedir/conf/php/php-pgsql.ini.erb > ${php_conf_dir}/php-pgsql.ini
+erb $basedir/conf/php/php-redis-session.ini.erb > ${php_conf_dir}/php-redis-session.ini
+erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
+erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
+echo "# End init"
+
 echo "# Init nextcloud"
 bin/nextcloud-config.sh
-
-#
-# init nginx config
-#
-echo "# Init nginx nextcloud config"
-erb conf/nginx/nextcloud.conf.erb > conf/nginx/nextcloud.conf
-export NGINX_HTTP_INCLUDES="conf/nginx/nextcloud.conf"
-#
-# start php+nginx script (from https://github.com/Scalingo/php-buildpack/blob/master/bin/compile)
-#
-echo "# Start nginx+php"
-bin/run
 
 php -f nextcloud/cron.php

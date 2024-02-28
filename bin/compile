@@ -11,7 +11,7 @@ set -o pipefail # Fail immediately on non-zero exit code within a pipeline.
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )" 
 
-NEXTCLOUD_VERSION="${NEXTCLOUD_VERSION:-28.0.2}"
+NEXTCLOUD_VERSION="${NEXTCLOUD_VERSION:-27.1.6}"
 
 echo "=====> Start building Nextcloud"
 
