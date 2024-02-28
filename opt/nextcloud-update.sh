@@ -5,7 +5,7 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 
-echo "# Init nextcloud"
+echo "# update nextcloud"
 
 if [[ -z "$DATABASE_URL" ]]; then
   echo >&2 "The environment variable DATABASE_URL must be set. The default user should be updated with the CREATEROLE privilege."
