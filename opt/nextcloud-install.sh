@@ -200,7 +200,7 @@ ls -l $(pwd)/data
 #
 # set background job to cron, instead of default ajax
 #
-php background:cron
+php occ background:cron
 
 #
 # init php with includes
