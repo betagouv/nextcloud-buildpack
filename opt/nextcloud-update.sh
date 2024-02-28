@@ -69,13 +69,12 @@ export REDIS_PORT
 # is installed ?
 #
 if [[ ! -f config/config.php ]] ; then
-
-echo "# prepare config.php template"
-export NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc db installed"
-for c in $NC_CONFIG_TEMPLATE; do
-  echo "# $c.config.php"
-  [ -f "$basedir/conf/nextcloud/$c.config.php" ] && cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
-done
+  echo "# prepare config.php template"
+  export NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc db installed"
+  for c in $NC_CONFIG_TEMPLATE; do
+    echo "# $c.config.php"
+    [ -f "$basedir/conf/nextcloud/$c.config.php" ] && cp $basedir/conf/nextcloud/$c.config.php config/$c.config.php
+  done
 fi
 )
 
@@ -99,6 +98,8 @@ mkdir -p "data/appdata_${NC_INSTANCEID}/appstore"
 touch  data/.ocdata
 touch  "data/appdata_${NC_INSTANCEID}/appstore/apps.json"
 
+php occ upgrade
+
 #
 # app
 #
@@ -110,4 +111,3 @@ for app in ${NC_APP_ENABLE}; do
   php occ app:enable $app
 done
 
-php occ upgrade
