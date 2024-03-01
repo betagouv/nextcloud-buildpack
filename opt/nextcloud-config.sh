@@ -111,4 +111,3 @@ erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
 #
 echo "# Init nginx nextcloud config"
 erb $basedir/conf/nginx/nextcloud.conf.erb > $basedir/conf/nginx/nextcloud.conf
-export NGINX_HTTP_INCLUDES="conf/nginx/nextcloud.conf"
