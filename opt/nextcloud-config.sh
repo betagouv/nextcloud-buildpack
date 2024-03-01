@@ -92,6 +92,10 @@ if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
     done;
 fi
 
+mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
+touch  $basedir/nextclouddata/.ocdata
+touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+
 #
 # init php with includes
 #
