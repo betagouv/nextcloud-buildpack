@@ -1,11 +1,11 @@
 #!/bin/bash
-#
+basedir="/app"
+
 if [ -n "$DEBUG" ]; then
   set -x
 fi
 
-
-basedir="/app"
+echo "# update nextcloud"
 
 if [[ -z "$DATABASE_URL" ]]; then
   echo >&2 "The environment variable DATABASE_URL must be set. The default user should be updated with the CREATEROLE privilege."
@@ -92,22 +92,22 @@ if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
     done;
 fi
 
-mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
-touch  $basedir/nextcloud/data/.ocdata
-touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+cd $basedir/nextcloud
+
+mkdir -p "data/appdata_${NC_INSTANCEID}/appstore"
+touch  data/.ocdata
+touch  "data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+
+php occ upgrade
 
 #
-# init php with includes
+# app
 #
-echo "# prepare includes php ini"
-php_conf_dir="vendor/php/etc/conf.d/"
-erb $basedir/conf/php/php-pgsql.ini.erb > ${php_conf_dir}/php-pgsql.ini
-erb $basedir/conf/php/php-redis-session.ini.erb > ${php_conf_dir}/php-redis-session.ini
-erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
-erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
+if [[ -z "$NC_APP_ENABLE" ]]; then
+  NC_APP_ENABLE="files_external"
+fi
 
-#
-# init nginx config
-#
-echo "# Init nginx nextcloud config"
-erb $basedir/conf/nginx/nextcloud.conf.erb > $basedir/conf/nginx/nextcloud.conf
+for app in ${NC_APP_ENABLE}; do
+  php occ app:enable $app
+done
+

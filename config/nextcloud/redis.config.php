@@ -3,7 +3,7 @@ $redis = parse_url(getenv('REDIS_URL'));
 
 if (getenv('REDIS_URL')) {
   $CONFIG = array(
-    'filelocking.enabled' => true,
+    'filelocking.enabled' => getenv('NC_FILELOCKING_ENABLED')  ?: true,
     'memcache.local' =>'\OC\Memcache\Redis' ,
     'memcache.distributed' => '\OC\Memcache\Redis',
     'memcache.locking' => '\OC\Memcache\Redis',

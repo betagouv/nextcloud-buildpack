@@ -10,7 +10,7 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 
-echo "# Init nextcloud"
+echo "# Install nextcloud"
 
 if [[ -z "$DATABASE_URL" ]]; then
   echo >&2 "The environment variable DATABASE_URL must be set. The default user should be updated with the CREATEROLE privilege."
@@ -134,12 +134,12 @@ if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
 fi
 
 # configure app theme
-echo "Setting login page"
-php occ theming:config name "${NC_THEMING_CONFIG_NAME:-Beta}"
-php occ theming:config url "${NC_THEMING_CONFIG_URL:-beta.gouv.fr}"
-php occ theming:config slogan "${NC_THEMING_CONFIG_SLOGAN:-Have fun !}"
-php occ theming:config disable-user-theming "${NC_THEMING_CONFIG_DISABLE_USER:-yes}"
-[[ -n "${NC_THEMING_CONFIG_LOGO}" ]] && php occ theming:config logo "${NC_THEMING_CONFIG_LOGO}"
+#echo "Setting login page"
+#php occ theming:config name "${NC_THEMING_CONFIG_NAME:-Beta}"
+#php occ theming:config url "${NC_THEMING_CONFIG_URL:-beta.gouv.fr}"
+#php occ theming:config slogan "${NC_THEMING_CONFIG_SLOGAN:-Have fun !}"
+#php occ theming:config disable-user-theming "${NC_THEMING_CONFIG_DISABLE_USER:-yes}"
+#[[ -n "${NC_THEMING_CONFIG_LOGO}" ]] && php occ theming:config logo "${NC_THEMING_CONFIG_LOGO}"
 
 #
 # app
@@ -155,6 +155,7 @@ fi
 for app in ${NC_APP_DISABLE}; do
   php occ app:disable $app
 done
+
 
 #
 # import config set
@@ -182,6 +183,13 @@ done
 
 fi
 
+mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
+touch  $basedir/nextcloud/data/.ocdata
+touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+
+php occ upgrade
+php occ maintenance:repair
+
 if php occ config:system:get installed; then
   echo "# config.php"
   cat config/config.php
@@ -195,12 +203,29 @@ fi
 
 echo "# ls data"
 ls -l $(pwd)/data
+
+echo "# Set cron as background job"
+php occ background:cron
+
 )
 
+#
+# set background job to cron, instead of default ajax
+#
+
+#
+# init php with includes
+#
 echo "# prepare includes php ini"
 php_conf_dir="vendor/php/etc/conf.d/"
 erb $basedir/conf/php/php-pgsql.ini.erb > ${php_conf_dir}/php-pgsql.ini
 erb $basedir/conf/php/php-redis-session.ini.erb > ${php_conf_dir}/php-redis-session.ini
 erb $basedir/conf/php/php-opcache.ini.erb > ${php_conf_dir}/php-opcache.ini
 erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
-echo "# End init"
+
+#
+# init htpasswd for basic auth
+#
+echo $NGINX_USER:$NGINX_PASSWORD > conf/htpasswd
+
+echo "# End install"

@@ -58,10 +58,10 @@
     "files_rightclick": {
       "installed_version": "1.6.0",
       "types": "",
-      "enabled": "yes"
+      "enabled": "no"
     },
     "files_sharing": {
-      "enabled": "yes",
+      "enabled": "no",
       "outgoing_server2server_share_enabled": "no",
       "incoming_server2server_share_enabled": "no"
     },
@@ -87,7 +87,7 @@
       "enabled": "no"
     },
     "oidc_login": {
-      "enabled": "yes"
+      "enabled": "no"
     },
     "oauth2": {
       "enabled": "no"
@@ -111,7 +111,7 @@
       "enabled": "no"
     },
     "serverinfo": {
-      "enabled": "yes"
+      "enabled": "no"
     },
     "settings": {
       "installed_version": "1.9.0",

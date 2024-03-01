@@ -1,2 +1,2 @@
-web: /app/bin/nextcloud.sh
-postdeploy: echo "# postdeploy" && /app/bin/nextcloud-init.sh
+web: /app/bin/nextcloud-run.sh
+postdeploy: echo "# postdeploy" && /app/bin/nextcloud-update.sh

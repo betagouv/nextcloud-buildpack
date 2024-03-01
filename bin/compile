@@ -11,7 +11,7 @@ set -o pipefail # Fail immediately on non-zero exit code within a pipeline.
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )" 
 
-NEXTCLOUD_VERSION="${NEXTCLOUD_VERSION:-28.0.2}"
+NEXTCLOUD_VERSION="${NEXTCLOUD_VERSION:-27.1.6}"
 
 echo "=====> Start building Nextcloud"
 
@@ -69,7 +69,7 @@ cp $basedir/../opt/*.sh "$BUILD_DIR/bin/"
 cp $basedir/../config/apps.txt "$BUILD_DIR/conf/nextcloud/"
 cp $basedir/../config/nextcloud/nextcloud_config.json "$BUILD_DIR/conf/nextcloud/"
 # Copy template config.php
-NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc db"
+NC_CONFIG_TEMPLATE="base secret s3 redis smtp oidc db installed"
 for c in $NC_CONFIG_TEMPLATE; do
 cp $basedir/../config/nextcloud/$c.config.php "$BUILD_DIR/conf/nextcloud/"
 done
