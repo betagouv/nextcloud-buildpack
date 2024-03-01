@@ -188,6 +188,7 @@ touch  $basedir/nextcloud/data/.ocdata
 touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
 
 php occ upgrade
+php occ maintenance:repair
 
 if php occ config:system:get installed; then
   echo "# config.php"
@@ -202,12 +203,15 @@ fi
 
 echo "# ls data"
 ls -l $(pwd)/data
+
+echo "# Set cron as background job"
+php occ background:cron
+
 )
 
 #
 # set background job to cron, instead of default ajax
 #
-php occ background:cron
 
 #
 # init php with includes
