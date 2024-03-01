@@ -10,7 +10,7 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 
-echo "# Init nextcloud"
+echo "# Install nextcloud"
 
 if [[ -z "$DATABASE_URL" ]]; then
   echo >&2 "The environment variable DATABASE_URL must be set. The default user should be updated with the CREATEROLE privilege."
@@ -217,4 +217,4 @@ erb $basedir/conf/php/php-apcu.ini.erb > ${php_conf_dir}/php-apcu.ini
 #
 echo $NGINX_USER:$NGINX_PASSWORD > conf/htpasswd
 
-echo "# End init"
+echo "# End install"
