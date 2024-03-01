@@ -156,11 +156,6 @@ for app in ${NC_APP_DISABLE}; do
   php occ app:disable $app
 done
 
-mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
-touch  $basedir/nextcloud/data/.ocdata
-touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
-
-php occ upgrade
 
 #
 # import config set
@@ -187,6 +182,12 @@ php occ upgrade
 ) || exit $?
 
 fi
+
+mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
+touch  $basedir/nextcloud/data/.ocdata
+touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
+
+php occ upgrade
 
 if php occ config:system:get installed; then
   echo "# config.php"
