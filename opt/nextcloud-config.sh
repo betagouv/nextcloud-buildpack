@@ -93,7 +93,7 @@ if [ -n "${NC_TRUSTED_DOMAINS+x}" ]; then
 fi
 
 mkdir -p "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore"
-touch  $basedir/nextclouddata/.ocdata
+touch  $basedir/nextcloud/data/.ocdata
 touch  "$basedir/nextcloud/data/appdata_${NC_INSTANCEID}/appstore/apps.json"
 
 #
